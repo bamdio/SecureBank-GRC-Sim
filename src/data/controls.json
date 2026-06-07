@@ -1,0 +1,92 @@
+{
+  "frameworks": {
+    "ISO_27001": {
+      "version": "2022",
+      "total_controls": 93,
+      "implemented": 79,
+      "partial": 11,
+      "not_implemented": 3,
+      "compliance_pct": 85,
+      "domains": [
+        { "id": "A.5", "name": "Organizational Controls", "controls": 37, "implemented": 32, "pct": 86 },
+        { "id": "A.6", "name": "People Controls", "controls": 8, "implemented": 7, "pct": 87 },
+        { "id": "A.7", "name": "Physical Controls", "controls": 14, "implemented": 13, "pct": 93 },
+        { "id": "A.8", "name": "Technological Controls", "controls": 34, "implemented": 27, "pct": 79 }
+      ]
+    },
+    "NIST_CSF": {
+      "version": "2.0",
+      "total_subcategories": 106,
+      "implemented": 91,
+      "partial": 10,
+      "not_implemented": 5,
+      "compliance_pct": 86,
+      "functions": [
+        { "id": "GV", "name": "GOVERN", "subcategories": 6, "implemented": 5, "pct": 83 },
+        { "id": "ID", "name": "IDENTIFY", "subcategories": 21, "implemented": 19, "pct": 90 },
+        { "id": "PR", "name": "PROTECT", "subcategories": 37, "implemented": 31, "pct": 84 },
+        { "id": "DE", "name": "DETECT", "subcategories": 13, "implemented": 11, "pct": 85 },
+        { "id": "RS", "name": "RESPOND", "subcategories": 17, "implemented": 14, "pct": 82 },
+        { "id": "RC", "name": "RECOVER", "subcategories": 12, "implemented": 11, "pct": 92 }
+      ]
+    },
+    "COBIT_2019": {
+      "version": "2019",
+      "total_objectives": 40,
+      "level3_or_above": 28,
+      "level1_to_2": 9,
+      "not_started": 3,
+      "compliance_pct": 70,
+      "domains": [
+        { "id": "EDM", "name": "Evaluate, Direct & Monitor", "objectives": 5, "avg_level": 3.2 },
+        { "id": "APO", "name": "Align, Plan & Organise", "objectives": 14, "avg_level": 2.8 },
+        { "id": "BAI", "name": "Build, Acquire & Implement", "objectives": 10, "avg_level": 2.6 },
+        { "id": "DSS", "name": "Deliver, Service & Support", "objectives": 6, "avg_level": 3.4 },
+        { "id": "MEA", "name": "Monitor, Evaluate & Assess", "objectives": 5, "avg_level": 3.0 }
+      ]
+    },
+    "COSO_ERM": {
+      "version": "2017",
+      "total_principles": 20,
+      "fully_met": 15,
+      "partially_met": 4,
+      "not_met": 1,
+      "compliance_pct": 75,
+      "components": [
+        { "name": "Governance & Culture", "principles": 5, "met": 4 },
+        { "name": "Strategy & Objective-Setting", "principles": 4, "met": 3 },
+        { "name": "Performance", "principles": 5, "met": 4 },
+        { "name": "Review & Revision", "principles": 3, "met": 2 },
+        { "name": "Information & Reporting", "principles": 3, "met": 2 }
+      ]
+    },
+    "ITIL_V4": {
+      "version": "v4",
+      "practices_assessed": 15,
+      "optimized": 3,
+      "managed": 7,
+      "defined": 4,
+      "initial": 1,
+      "compliance_pct": 80,
+      "key_practices": [
+        { "name": "Incident Management", "maturity": "Optimized", "score": 5 },
+        { "name": "Problem Management", "maturity": "Managed", "score": 4 },
+        { "name": "Change Enablement", "maturity": "Defined", "score": 3 },
+        { "name": "Service Continuity", "maturity": "Managed", "score": 4 },
+        { "name": "Information Security", "maturity": "Managed", "score": 4 },
+        { "name": "Risk Management", "maturity": "Defined", "score": 3 }
+      ]
+    }
+  },
+  "aws_security_posture": {
+    "security_hub_score": 78.4,
+    "guardduty_findings": { "high": 2, "medium": 8, "low": 23 },
+    "config_compliance": 82,
+    "inspector_findings": { "critical": 1, "high": 4, "medium": 12 },
+    "services_enabled": [
+      "GuardDuty", "Security Hub", "Inspector v2", "Macie", 
+      "CloudTrail", "Config", "IAM Access Analyzer", "Shield Advanced",
+      "WAF", "KMS", "Secrets Manager", "Certificate Manager"
+    ]
+  }
+}

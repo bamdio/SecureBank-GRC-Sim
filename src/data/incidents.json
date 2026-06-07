@@ -1,0 +1,111 @@
+{
+  "incidents": [
+    {
+      "id": "INC-2024-0089",
+      "title": "Data Exfiltration Attempt — Customer PII",
+      "severity": "P1 — Critical",
+      "status": "CLOSED",
+      "opened": "2024-10-15T09:32:00Z",
+      "closed": "2024-10-15T18:45:00Z",
+      "ttr_hours": 9.2,
+      "category": "Data Breach Attempt",
+      "affected_systems": ["CRM Database", "Customer Portal API"],
+      "responders": ["CISO", "SOC Lead", "DBA Team", "Legal"],
+      "timeline": [
+        { "time": "09:32", "action": "GuardDuty alert: Unusual S3 API calls from internal IP" },
+        { "time": "09:38", "action": "SOC analyst escalated to P1 — IR team activated" },
+        { "time": "09:55", "action": "Affected EC2 instance isolated via Security Group change" },
+        { "time": "10:30", "action": "Forensic snapshot taken; GuardDuty findings exported" },
+        { "time": "12:00", "action": "Root cause identified: compromised developer credentials" },
+        { "time": "14:00", "action": "All IAM credentials rotated; MFA enforced" },
+        { "time": "18:45", "action": "Incident closed; OCC notification prepared" }
+      ],
+      "frameworks": ["ISO 27001 A.16", "NIST RS.RP", "ITIL Incident Mgmt", "COBIT DSS02"],
+      "lessons_learned": "Developer MFA bypass policy discovered. Mandatory MFA now enforced via IAM policy."
+    },
+    {
+      "id": "INC-2024-0102",
+      "title": "Ransomware Pre-Staging — Host Isolation",
+      "severity": "P1 — Critical",
+      "status": "IN_PROGRESS",
+      "opened": "2024-11-02T22:50:00Z",
+      "closed": null,
+      "ttr_hours": null,
+      "category": "Malware / Ransomware",
+      "affected_systems": ["File Server FS-14", "Backup Server BK-03"],
+      "responders": ["CISO", "SOC Lead", "Endpoint Team", "Legal", "Vendor (CrowdStrike)"],
+      "timeline": [
+        { "time": "22:45", "action": "SIEM alert: Shadow copy deletion commands on FS-14" },
+        { "time": "22:50", "action": "IR Team activated — P1 declared" },
+        { "time": "23:05", "action": "Host 10.14.22.45 isolated at network switch level" },
+        { "time": "23:30", "action": "AWS RDS snapshots triggered as precaution" },
+        { "time": "00:15", "action": "CrowdStrike Falcon containment applied to FS-14" },
+        { "time": "02:00", "action": "Forensic acquisition in progress" }
+      ],
+      "frameworks": ["ISO 27001 A.17", "NIST RS.MI", "ITIL Incident Mgmt", "COBIT DSS04"],
+      "lessons_learned": null
+    },
+    {
+      "id": "INC-2024-0078",
+      "title": "MFA Bypass — VPN Access",
+      "severity": "P2 — High",
+      "status": "CLOSED",
+      "opened": "2024-09-20T11:00:00Z",
+      "closed": "2024-09-21T09:00:00Z",
+      "ttr_hours": 22.0,
+      "category": "Access Control",
+      "affected_systems": ["VPN Gateway", "Active Directory"],
+      "responders": ["SOC Lead", "IAM Team"],
+      "timeline": [
+        { "time": "11:00", "action": "User reported MFA not prompting on VPN login" },
+        { "time": "11:45", "action": "Misconfigured Okta policy identified — MFA exemption group too broad" },
+        { "time": "14:00", "action": "Policy corrected; affected users re-enrolled" },
+        { "time": "09:00", "action": "Audit log review complete — no unauthorized access confirmed" }
+      ],
+      "frameworks": ["ISO 27001 A.9", "NIST PR.AC", "ITIL Change Enablement"],
+      "lessons_learned": "IAM policy change review gate added. MFA exemptions require CISO sign-off."
+    }
+  ],
+  "dr_scenarios": [
+    {
+      "id": "DR-SCEN-001",
+      "name": "Primary Data Center Total Loss",
+      "rto_target_hours": 4,
+      "rpo_target_hours": 1,
+      "rto_actual_hours": 3.2,
+      "rpo_actual_hours": 0.75,
+      "last_tested": "2024-10-01",
+      "status": "COMPLIANT",
+      "aws_services": ["Route 53 failover", "RDS Multi-AZ", "S3 Cross-Region Replication", "CloudFormation IaC"],
+      "steps": [
+        "Activate DR runbook DR-001 in ServiceNow",
+        "Route 53 health check triggers automatic DNS failover to us-west-2",
+        "RDS Multi-AZ standby promoted automatically",
+        "EC2 Auto Scaling launches in secondary region",
+        "Validate transaction processing on secondary",
+        "Notify OCC and Fed Reserve within 2-hour SLA",
+        "Activate Business Continuity Team"
+      ]
+    },
+    {
+      "id": "DR-SCEN-002",
+      "name": "Ransomware — Full Restore",
+      "rto_target_hours": 8,
+      "rpo_target_hours": 4,
+      "rto_actual_hours": 11.5,
+      "rpo_actual_hours": 3.8,
+      "last_tested": "2024-08-15",
+      "status": "NON_COMPLIANT",
+      "aws_services": ["AWS Backup (immutable)", "S3 Glacier", "Systems Manager Automation"],
+      "steps": [
+        "Isolate all affected systems at network layer",
+        "Engage CrowdStrike IR retainer",
+        "Restore from AWS Backup immutable vault (last clean snapshot)",
+        "Validate data integrity with checksums",
+        "Rebuild compromised systems from golden AMIs",
+        "Gradual service restoration with monitoring",
+        "File FinCEN report if customer data impacted"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "id": "TH-2024-001",
+    "name": "FIN7 — Spear Phishing Campaign",
+    "actor": "FIN7 (Carbanak Group)",
+    "type": "APT",
+    "severity": "CRITICAL",
+    "confidence": 92,
+    "status": "ACTIVE",
+    "detected": "2024-11-03T08:14:00Z",
+    "ttps": ["T1566.001", "T1059.001", "T1055", "T1041"],
+    "target_systems": ["Email Gateway", "Executive Workstations"],
+    "iocs": {
+      "domains": ["secure-svb-update.com", "banking-verify-svb.net"],
+      "ips": ["185.234.xx.xx", "91.108.xx.xx"],
+      "hashes": ["a3f8c2e1d4b9...", "7c12e4f8a9b3..."]
+    },
+    "mitre_attack": "Initial Access → Execution → Defense Evasion → Exfiltration",
+    "nist_function": "DETECT",
+    "iso_control": "A.16.1",
+    "description": "FIN7 conducting targeted spear-phishing against SVB executive leadership with lure documents mimicking Federal Reserve compliance notices.",
+    "recommended_actions": [
+      "Block IOC domains/IPs at perimeter firewall",
+      "Alert email security team to inspect all *.secure-svb-* domains",
+      "Deploy YARA rule FIN7-2024-Q4 to EDR",
+      "Brief executive assistants on social engineering tactics"
+    ],
+    "aws_controls": ["AWS SES email filtering", "GuardDuty DNS findings", "Route 53 Resolver DNS Firewall"]
+  },
+  {
+    "id": "TH-2024-002",
+    "name": "Ransomware Pre-Staging Detected",
+    "actor": "Unknown (LockBit affiliate suspected)",
+    "type": "Ransomware",
+    "severity": "HIGH",
+    "confidence": 78,
+    "status": "INVESTIGATING",
+    "detected": "2024-11-02T22:45:00Z",
+    "ttps": ["T1486", "T1490", "T1489", "T1070.004"],
+    "target_systems": ["File Servers", "Backup Systems", "Domain Controllers"],
+    "iocs": {
+      "domains": [],
+      "ips": ["10.14.22.45 (internal — compromised host suspected)"],
+      "hashes": ["d4e9f1a2b8c7..."]
+    },
+    "mitre_attack": "Discovery → Lateral Movement → Impact",
+    "nist_function": "DETECT",
+    "iso_control": "A.17.1",
+    "description": "Unusual SMB enumeration from internal host 10.14.22.45. Shadow copy deletion commands observed in SIEM. Consistent with ransomware pre-detonation staging.",
+    "recommended_actions": [
+      "ISOLATE host 10.14.22.45 immediately",
+      "Initiate IR Playbook: PB-RANSOM-01",
+      "Snapshot AWS RDS instances as precaution",
+      "Notify CISO and activate Incident Response Team"
+    ],
+    "aws_controls": ["AWS Backup immutable backups", "EC2 instance isolation via SG", "GuardDuty Trojan findings"]
+  },
+  {
+    "id": "TH-2024-003",
+    "name": "SWIFT Payment Fraud Attempt",
+    "actor": "Lazarus Group (DPRK)",
+    "type": "Financial Fraud",
+    "severity": "CRITICAL",
+    "confidence": 88,
+    "status": "CONTAINED",
+    "detected": "2024-10-29T03:22:00Z",
+    "ttps": ["T1078", "T1553", "T1036"],
+    "target_systems": ["SWIFT Gateway", "Treasury Systems"],
+    "iocs": {
+      "domains": [],
+      "ips": ["203.0.xx.xx"],
+      "hashes": []
+    },
+    "mitre_attack": "Valid Accounts → Masquerading → Financial Transfer",
+    "nist_function": "RESPOND",
+    "iso_control": "A.16.1",
+    "description": "Attempted fraudulent SWIFT MT103 message originating from compromised correspondent bank credentials. Transaction value: $47.2M. Blocked by anomaly detection.",
+    "recommended_actions": [
+      "Transaction blocked — correspondent bank notified",
+      "SWIFT credentials rotated",
+      "FinCEN SAR filed",
+      "Forensic analysis of SWIFT logs initiated"
+    ],
+    "aws_controls": ["Amazon Fraud Detector", "AWS Security Hub SWIFT finding"]
+  },
+  {
+    "id": "TH-2024-004",
+    "name": "DDoS Attack on Online Banking Portal",
+    "actor": "Unknown Hacktivist Group",
+    "type": "DDoS",
+    "severity": "HIGH",
+    "confidence": 95,
+    "status": "MITIGATED",
+    "detected": "2024-10-25T14:00:00Z",
+    "ttps": ["T1498", "T1499"],
+    "target_systems": ["Online Banking Portal", "API Gateway", "CDN"],
+    "iocs": {
+      "domains": [],
+      "ips": ["Multiple — botnet"],
+      "hashes": []
+    },
+    "mitre_attack": "Impact — Network Denial of Service",
+    "nist_function": "RESPOND",
+    "iso_control": "A.17.2",
+    "description": "3.8 Tbps volumetric DDoS targeting online banking portal. AWS Shield Advanced automatically mitigated. Peak duration 47 minutes. Service degraded but not fully offline.",
+    "recommended_actions": [
+      "AWS Shield Advanced auto-mitigation — APPLIED",
+      "CloudFront rate limiting adjusted",
+      "Incident closed — post-incident review scheduled"
+    ],
+    "aws_controls": ["AWS Shield Advanced", "CloudFront", "AWS WAF rate-based rules"]
+  }
+]

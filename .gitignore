@@ -1,0 +1,38 @@
+# SecureVault Bank GRC Simulation — .gitignore
+
+# NEVER commit API keys or secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+secrets/
+config/secrets.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# IDE
+.vscode/settings.json
+.idea/
+*.suo
+
+# Build
+dist/
+build/
+
+# Logs (never commit real logs)
+logs/
+*.log
